@@ -8,8 +8,8 @@ from django.db import connection, connections, router, transaction
 from django.db.backends import utils
 from django.db.models import signals, Q
 from django.db.models.deletion import SET_NULL, SET_DEFAULT, CASCADE
-from django.db.models.fields import (AutoField, Field, IntegerField,
-    PositiveIntegerField, PositiveSmallIntegerField, FieldDoesNotExist)
+from django.db.models.fields import (AutoField, BigAutoField, Field, 
+    IntegerField, PositiveIntegerField, PositiveSmallIntegerField, FieldDoesNotExist)
 from django.db.models.lookups import IsNull
 from django.db.models.related import RelatedObject, PathInfo
 from django.db.models.query import QuerySet
@@ -1771,11 +1771,16 @@ class ForeignKey(ForeignObject):
     def db_type(self, connection):
         # The database column type of a ForeignKey is the column type
         # of the field to which it points. An exception is if the ForeignKey
-        # points to an AutoField/PositiveIntegerField/PositiveSmallIntegerField,
-        # in which case the column type is simply that of an IntegerField.
+        # points to an AutoField/BigAutoField/PositiveIntegerField/
+        # PositiveSmallIntegerField,
+        # in which case the column type is simply that of an IntegerField
+        # (or BigIntegerField in the case of BigAutoField).
         # If the database needs similar types for key fields however, the only
-        # thing we can do is making AutoField an IntegerField.
+        # thing we can do is making AutoField an IntegerField
+        # or BigAutoField a BigIntegerField.
         rel_field = self.related_field
+        if isinstance(rel_field, BigAutoField):
+            return BigIntegerField().db_type(connection=connection)
         if (isinstance(rel_field, AutoField) or
                 (not connection.features.related_fields_match_type and
                 isinstance(rel_field, (PositiveIntegerField,

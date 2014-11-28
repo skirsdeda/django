@@ -33,10 +33,10 @@ from django.utils.itercompat import is_iterable
 # Avoid "TypeError: Item in ``from list'' not a string" -- unicode_literals
 # makes these strings unicode
 __all__ = [str(x) for x in (
-    'AutoField', 'BLANK_CHOICE_DASH', 'BigIntegerField', 'BinaryField',
-    'BooleanField', 'CharField', 'CommaSeparatedIntegerField', 'DateField',
-    'DateTimeField', 'DecimalField', 'EmailField', 'Empty', 'Field',
-    'FieldDoesNotExist', 'FilePathField', 'FloatField',
+    'AutoField', 'BigAutoField', 'BLANK_CHOICE_DASH', 'BigIntegerField', 
+    'BinaryField', 'BooleanField', 'CharField', 'CommaSeparatedIntegerField', 
+    'DateField', 'DateTimeField', 'DecimalField', 'EmailField', 'Empty', 
+    'Field', 'FieldDoesNotExist', 'FilePathField', 'FloatField',
     'GenericIPAddressField', 'IPAddressField', 'IntegerField', 'NOT_PROVIDED',
     'NullBooleanField', 'PositiveIntegerField', 'PositiveSmallIntegerField',
     'SlugField', 'SmallIntegerField', 'TextField', 'TimeField', 'URLField',
@@ -923,6 +923,13 @@ class AutoField(Field):
 
     def formfield(self, **kwargs):
         return None
+
+
+class BigAutoField(AutoField):
+    description = _("Big (8 byte) integer")
+    
+    def get_internal_type(self):
+        return "BigAutoField"
 
 
 class BooleanField(Field):
