@@ -54,6 +54,8 @@ Model field                      Form field
 ===============================  ========================================
 ``AutoField``                    Not represented in the form
 
+``BigAutoField``                 Not represented in the form 
+
 ``BigIntegerField``              ``IntegerField`` with ``min_value`` set
                                  to -9223372036854775808 and ``max_value``
                                  set to 9223372036854775807.

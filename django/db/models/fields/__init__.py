@@ -622,6 +622,12 @@ class AutoField(Field):
     def formfield(self, **kwargs):
         return None
 
+class BigAutoField(AutoField):
+    description = _("Big (8 byte) integer")
+    
+    def get_internal_type(self):
+        return "BigAutoField"
+
 class BooleanField(Field):
     empty_strings_allowed = False
     default_error_messages = {

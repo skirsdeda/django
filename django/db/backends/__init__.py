@@ -1155,7 +1155,7 @@ class BaseDatabaseOperations(object):
         if internal_type == 'FloatField':
             return float(value)
         elif (internal_type and (internal_type.endswith('IntegerField')
-                                 or internal_type == 'AutoField')):
+                                 or internal_type.endswith('AutoField'))):
             return int(value)
         return value
 

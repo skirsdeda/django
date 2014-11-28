@@ -9,6 +9,7 @@ class DatabaseCreation(BaseDatabaseCreation):
     # schema inspection is more useful.
     data_types = {
         'AutoField':                    'integer',
+        'BigAutoField':                 'integer AUTOINCREMENT', # bigint AUTOINCREMENT is not supported but integer AUTOINCREMENT is an alias to ROWID which is a 64-bit signed integer
         'BinaryField':                  'BLOB',
         'BooleanField':                 'bool',
         'CharField':                    'varchar(%(max_length)s)',

@@ -352,6 +352,20 @@ according to available IDs. You usually won't need to use this directly; a
 primary key field will automatically be added to your model if you don't specify
 otherwise. See :ref:`automatic-primary-key-fields`.
 
+``BigAutoField``
+----------------
+
+.. versionadded:: trunk
+
+.. class:: BigAutoField(**options)
+
+Behaves the same as :class:`AutoField` except it uses a :class:`BigIntegerField`
+integer as the field. Use this field if you require a larger number of IDs than
+:class:`AutoField` allows.
+
+You may only have one instance of :class:`AutoField` or :class:`BigAutoField`
+in your model.
+
 ``BigIntegerField``
 -------------------
 
